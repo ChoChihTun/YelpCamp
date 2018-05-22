@@ -2,6 +2,8 @@ const express = require('express');
 
 const app = express();
 
+const bodyParser = require('body-parser');
+
 const campgrounds = [
   {
     name: 'Salmon Creek',
@@ -16,14 +18,30 @@ const campgrounds = [
   },
 ];
 
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
   res.render('landing');
 });
 
+/* Using /campgrounds for get and post for RESTful */
 app.get('/campgrounds', (req, res) => {
   res.render('campgrounds', { campgrounds: campgrounds });
+});
+
+app.post('/campgrounds', (req, res) => {
+  const { name } = req.body;
+  const { image } = req.body;
+  const newCampground = { name: name, image: image };
+
+  campgrounds.push(newCampground);
+  res.redirect('/campgrounds');
+});
+
+app.get('/campgrounds/new', (req, res) => {
+  res.render('new');
 });
 
 app.listen(3000, () => {
