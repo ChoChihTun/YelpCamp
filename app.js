@@ -11,6 +11,7 @@ mongoose.connect('mongodb://localhost/yelp_camp');
 const campgroundSchema = new mongoose.Schema({
   name: String,
   image: String,
+  description: String,
 });
 
 const Campground = mongoose.model('Campground', campgroundSchema);
@@ -23,23 +24,27 @@ app.get('/', (req, res) => {
   res.render('landing');
 });
 
+// INDEX
 /* Using /campgrounds for get and post for RESTful */
 app.get('/campgrounds', (req, res) => {
   Campground.find({}, (err, campgrounds) => {
     if (err) {
       console.log(err);
     } else {
-      res.render('campgrounds', { campgrounds: campgrounds });
+      res.render('index', { campgrounds: campgrounds });
     }
   });
 });
 
+// CREATE
 app.post('/campgrounds', (req, res) => {
   const { name } = req.body;
   const { image } = req.body;
+  const { description } = req.body;
   const newCampground = {
     name: name,
     image: image,
+    description: description,
   };
 
   Campground.create(newCampground, (err, campground) => {
@@ -53,8 +58,22 @@ app.post('/campgrounds', (req, res) => {
   });
 });
 
+// NEW
 app.get('/campgrounds/new', (req, res) => {
   res.render('new');
+});
+
+// SHOW
+app.get('/campgrounds/:id', (req, res) => {
+  // find campground with the provided id
+  Campground.findById(req.params.id, (err, foundCampground) => {
+    if (err) {
+      console.log(err);
+    } else {
+      // render show template with that campground
+      res.render('show', { campground: foundCampground });
+    }
+  });
 });
 
 app.listen(3000, () => {
