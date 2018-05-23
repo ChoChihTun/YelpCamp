@@ -8,14 +8,9 @@ const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/yelp_camp');
 
-const campgroundSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String,
-});
+const Campground = require('./models/campground');
 
-const Campground = mongoose.model('Campground', campgroundSchema);
-
+// CONFIG
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
