@@ -10,6 +10,8 @@ mongoose.connect('mongodb://localhost/yelp_camp');
 
 const Campground = require('./models/campground');
 
+const seedDB = require('./seeds')
+
 // CONFIG
 app.use(bodyParser.urlencoded({ extended: true }));
 
