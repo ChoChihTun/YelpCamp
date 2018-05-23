@@ -1,5 +1,3 @@
-const mongoose = require('mongoose');
-
 const Campground = require('./models/campground');
 
 const Comment = require('./models/comment');
@@ -62,4 +60,5 @@ function seedDB() {
   // add a few comments
 }
 
+// Returns the function
 module.exports = seedDB;

@@ -10,7 +10,9 @@ mongoose.connect('mongodb://localhost/yelp_camp');
 
 const Campground = require('./models/campground');
 
-const seedDB = require('./seeds')
+const seedDB = require('./seeds');
+
+seedDB();
 
 // CONFIG
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -63,7 +65,7 @@ app.get('/campgrounds/new', (req, res) => {
 // SHOW
 app.get('/campgrounds/:id', (req, res) => {
   // find campground with the provided id
-  Campground.findById(req.params.id, (err, foundCampground) => {
+  Campground.findById(req.params.id).populate('comments').exec((err, foundCampground) => {
     if (err) {
       console.log(err);
     } else {
