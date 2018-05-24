@@ -98,7 +98,7 @@ app.get('/campgrounds/:id', (req, res) => {
 // ================
 
 // NEW
-app.get('/campgrounds/:id/comments/new', (req, res) => {
+app.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
   Campground.findById(req.params.id, (err, campground) => {
     if (err) {
       console.log(err);
@@ -109,7 +109,7 @@ app.get('/campgrounds/:id/comments/new', (req, res) => {
 });
 
 // CREATE
-app.post('/campgrounds/:id/comments', (req, res) => {
+app.post('/campgrounds/:id/comments', isLoggedIn, (req, res) => {
   Campground.findById(req.params.id, (err, campground) => {
     if (err) {
       console.log(err);
@@ -169,6 +169,15 @@ app.get('/logout', (req, res) => {
   req.logout(); // Destroying user data in this session
   res.redirect('/campgrounds');
 });
+
+function isLoggedIn(req, res, next) {
+  // if is logged in, we will move to next param in the get request
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  // if not loggin, go to login page
+  res.redirect('/login');
+}
 
 app.listen(3000, () => {
   console.log('YelpCamp has started!');
