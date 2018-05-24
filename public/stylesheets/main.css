@@ -9,3 +9,11 @@
 .img-thumbnail .caption-full {
   padding: 9px;
 }
+
+.navbar-dark .navbar-nav .nav-link {
+  color: white;
+}
+
+#signed-in-as {
+  border-right: 2px solid white;
+}

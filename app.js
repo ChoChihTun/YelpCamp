@@ -26,6 +26,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// A middle ware for passing req.user --> Run automatically for all request
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 // CONFIG
 app.use(bodyParser.urlencoded({ extended: true }));
 
