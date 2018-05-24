@@ -3,8 +3,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const Campground = require('./models/campground');
-const Comment = require('./models/comment');
+const path = require('path');
 const seedDB = require('./seeds');
 const User = require('./models/user');
 
@@ -39,7 +38,7 @@ app.use((req, res, next) => {
 // CONFIG
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.set('view engine', 'ejs');
 

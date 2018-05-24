@@ -26,9 +26,9 @@ router.post('/', isLoggedIn, (req, res) => {
       console.log(err);
       res.redirect('/campgrounds');
     } else {
-      Comment.create(req.body.comment, (err, comment) => {
-        if (err) {
-          console.log(err);
+      Comment.create(req.body.comment, (commentErr, comment) => {
+        if (commentErr) {
+          console.log(commentErr);
         } else {
           // req.user is valid because we ran isLoggedIn and we know user must be present
           comment.author.id = req.user._id;
@@ -49,7 +49,7 @@ function isLoggedIn(req, res, next) {
     return next();
   }
   // if not loggin, go to login page
-  res.redirect('/login');
+  return res.redirect('/login');
 }
 
 module.exports = router;

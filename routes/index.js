@@ -28,7 +28,7 @@ router.post('/register', (req, res) => {
       console.log(err);
       return res.render('register');
     }
-    passport.authenticate('local')(req, res, () => {
+    return passport.authenticate('local')(req, res, () => {
       res.redirect('/campgrounds');
     });
   });
@@ -43,23 +43,12 @@ router.get('/login', (req, res) => {
 router.post('/login', passport.authenticate('local', { // middleware: codes that we run before the callback function
   successRedirect: '/campgrounds',
   failureRedirect: '/login',
-}), (req, res) => {
-  console.log('test');
-});
+}));
 
 // Logout
 router.get('/logout', (req, res) => {
   req.logout(); // Destroying user data in this session
   res.redirect('/campgrounds');
 });
-
-function isLoggedIn(req, res, next) {
-  // if is logged in, we will move to next param in the get request
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  // if not loggin, go to login page
-  res.redirect('/login');
-}
 
 module.exports = router;

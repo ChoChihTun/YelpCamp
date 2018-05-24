@@ -59,13 +59,4 @@ router.get('/:id', (req, res) => {
   });
 });
 
-function isLoggedIn(req, res, next) {
-  // if is logged in, we will move to next param in the get request
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  // if not loggin, go to login page
-  res.redirect('/login');
-}
-
 module.exports = router;
