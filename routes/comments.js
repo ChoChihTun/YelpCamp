@@ -1,6 +1,6 @@
 const express = require('express');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const Campground = require('../models/campground');
 const Comment = require('../models/comment');
 
@@ -9,7 +9,7 @@ const Comment = require('../models/comment');
 // ================
 
 // NEW
-router.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
   Campground.findById(req.params.id, (err, campground) => {
     if (err) {
       console.log(err);
@@ -20,7 +20,7 @@ router.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
 });
 
 // CREATE
-router.post('/campgrounds/:id/comments', isLoggedIn, (req, res) => {
+router.post('/', isLoggedIn, (req, res) => {
   Campground.findById(req.params.id, (err, campground) => {
     if (err) {
       console.log(err);
