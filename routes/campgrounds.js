@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
 });
 
 // CREATE
-router.post('/', (req, res) => {
+router.post('/', isLoggedIn, (req, res) => {
   const { name } = req.body;
   const { image } = req.body;
   const { description } = req.body;
@@ -42,7 +42,7 @@ router.post('/', (req, res) => {
 });
 
 // NEW
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
   res.render('campgrounds/new');
 });
 
@@ -58,5 +58,14 @@ router.get('/:id', (req, res) => {
     }
   });
 });
+
+function isLoggedIn(req, res, next) {
+  // if is logged in, we will move to next param in the get request
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  // if not loggin, go to login page
+  return res.redirect('/login');
+}
 
 module.exports = router;
