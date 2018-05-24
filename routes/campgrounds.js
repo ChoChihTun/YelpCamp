@@ -24,10 +24,15 @@ router.post('/', isLoggedIn, (req, res) => {
   const { name } = req.body;
   const { image } = req.body;
   const { description } = req.body;
+  const author = {
+    id: req.user._id,
+    username: req.user.username,
+  };
   const newCampground = {
     name: name,
     image: image,
     description: description,
+    author: author,
   };
 
   Campground.create(newCampground, (err, campground) => {
@@ -35,9 +40,8 @@ router.post('/', isLoggedIn, (req, res) => {
       console.log(err);
     } else {
       console.log(campground);
+      res.redirect('/campgrounds');
     }
-
-    res.redirect('/campgrounds');
   });
 });
 
