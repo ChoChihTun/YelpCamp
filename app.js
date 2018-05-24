@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const bodyParser = require('body-parser');
@@ -24,7 +24,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser);
+passport.deserializeUser(User.deserializeUser());
 
 // CONFIG
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -132,6 +132,43 @@ app.post('/campgrounds/:id/comments', (req, res) => {
 // AUTH ROUTES
 // ===============
 
+// Show register form
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+
+// Handle sign up logic
+app.post('/register', (req, res) => {
+  const newUser = new User({ username: req.body.username });
+  User.register(newUser, req.body.password, (err) => {
+    if (err) {
+      console.log(err);
+      return res.render('register');
+    }
+    passport.authenticate('local')(req, res, () => {
+      res.redirect('/campgrounds');
+    });
+  });
+});
+
+// Show login form
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+// Handling login logic
+app.post('/login', passport.authenticate('local', { // middleware: codes that we run before the callback function
+  successRedirect: '/campgrounds',
+  failureRedirect: '/login',
+}), (req, res) => {
+  console.log('test');
+});
+
+// Logout
+app.get('/logout', (req, res) => {
+  req.logout(); // Destroying user data in this session
+  res.redirect('/campgrounds');
+});
 
 app.listen(3000, () => {
   console.log('YelpCamp has started!');
