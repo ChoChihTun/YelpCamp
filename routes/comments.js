@@ -30,6 +30,10 @@ router.post('/', isLoggedIn, (req, res) => {
         if (err) {
           console.log(err);
         } else {
+          // req.user is valid because we ran isLoggedIn and we know user must be present
+          comment.author.id = req.user._id;
+          comment.author.username = req.user.username;
+          comment.save();
           campground.comments.push(comment);
           campground.save();
           res.redirect(`/campgrounds/${req.params.id}`);
