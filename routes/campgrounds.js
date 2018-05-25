@@ -63,6 +63,10 @@ router.get('/:id', (req, res) => {
   });
 });
 
+// EDIT
+
+// UPDATE
+
 function isLoggedIn(req, res, next) {
   // if is logged in, we will move to next param in the get request
   if (req.isAuthenticated()) {

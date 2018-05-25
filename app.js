@@ -4,6 +4,7 @@ const LocalStrategy = require('passport-local');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
+const methodOverride = require('method-override');
 const seedDB = require('./seeds');
 const User = require('./models/user');
 
@@ -42,6 +43,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 app.set('view engine', 'ejs');
 
+app.use(methodOverride('_method'));
 app.use(indexRoutes);
 app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/comments', commentRoutes);
