@@ -64,13 +64,9 @@ router.get('/:id', (req, res) => {
 });
 
 // EDIT
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', checkCampgroundOwnership, (req, res) => {
   Campground.findById(req.params.id, (err, foundCampground) => {
-    if (err) {
-      res.redirect('/campgrounds');
-    } else {
-      res.render('campgrounds/edit', { campground: foundCampground });
-    }
+    res.render('campgrounds/edit', { campground: foundCampground });
   });
 });
 
@@ -103,6 +99,25 @@ function isLoggedIn(req, res, next) {
   }
   // if not loggin, go to login page
   return res.redirect('/login');
+}
+
+// Middle ware for authorization
+function checkCampgroundOwnership(req, res, next) {
+  if (req.isAuthenticated()) {
+    Campground.findById(req.params.id, (err, foundCampground) => {
+      if (err) {
+        res.redirect('back'); // redirect back to where user comes from
+
+        // Checks if user owns campground
+      } else if (foundCampground.author.id.equals(req.user._id)) {
+        next();
+      } else {
+        res.redirect('back');
+      }
+    });
+  } else {
+    res.redirect('back');
+  }
 }
 
 module.exports = router;
