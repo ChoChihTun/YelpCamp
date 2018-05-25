@@ -85,6 +85,17 @@ router.put('/:id', (req, res) => {
   });
 });
 
+// DESTROY
+router.delete('/:id', (req, res) => {
+  Campground.findByIdAndRemove(req.params.id, (err) => {
+    if (err) {
+      res.redirect('/campgrounds');
+    } else {
+      res.redirect('/campgrounds');
+    }
+  });
+});
+
 function isLoggedIn(req, res, next) {
   // if is logged in, we will move to next param in the get request
   if (req.isAuthenticated()) {

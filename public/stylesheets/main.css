@@ -17,3 +17,7 @@
 #signed-in-as {
   border-right: 2px solid white;
 }
+
+#delete-form {
+  display: inline;
+}
