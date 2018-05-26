@@ -49,3 +49,22 @@
       </div>
     </div>
   </nav>
+
+  <div class='container'>
+    <!-- If error exists and checks if there is anything in the array because often the array is empty(truthy) -->
+    <% if (error && error.length > 0) { %>
+      <div class="alert alert-danger" role="alert">
+        <h1>
+          <%= error %>
+        </h1>
+      </div>
+      <% } %>
+        <!-- If error exists and checks if there is anything in the array because often the array is empty(truthy) -->
+        <% if (success && success.length > 0)  { %>
+          <div class="alert alert-success" role="alert">
+            <h1>
+              <%= success %>
+            </h1>
+          </div>
+          <% } %>
+  </div>

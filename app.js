@@ -4,6 +4,7 @@ const LocalStrategy = require('passport-local');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
+const flash = require('connect-flash');
 const methodOverride = require('method-override');
 const seedDB = require('./seeds');
 const User = require('./models/user');
@@ -16,6 +17,8 @@ const app = express();
 
 mongoose.connect('mongodb://localhost/yelp_camp');
 seedDB();
+
+app.use(flash()); // Need Express Session & Must hapen before passport config
 
 // PASSPORT CONFIG
 app.use(require('express-session')({
@@ -33,6 +36,8 @@ passport.deserializeUser(User.deserializeUser());
 // A middle ware for PASSING req.user --> Run automatically for all request
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
+  res.locals.error = req.flash('error');
+  res.locals.success = req.flash('success');
   next();
 });
 

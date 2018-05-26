@@ -47,6 +47,7 @@ router.post('/login', passport.authenticate('local', { // middleware: codes that
 // Logout
 router.get('/logout', (req, res) => {
   req.logout(); // Destroying user data in this session
+  req.flash('success', 'You have logged out!');
   res.redirect('/campgrounds');
 });
 

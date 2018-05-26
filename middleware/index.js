@@ -10,6 +10,7 @@ middlewareObj.isLoggedIn = (req, res, next) => {
     return next();
   }
   // if not loggin, go to login page
+  req.flash('error', 'Please Login First!'); // Wont be display until our next page/request
   return res.redirect('/login');
 };
 
