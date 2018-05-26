@@ -29,6 +29,7 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
     } else {
       Comment.create(req.body.comment, (commentErr, comment) => {
         if (commentErr) {
+          req.flash('error', 'Something went wrong');
           console.log(commentErr);
         } else {
           // req.user is valid because we ran isLoggedIn and we know user must be present
@@ -37,6 +38,8 @@ router.post('/', middleware.isLoggedIn, (req, res) => {
           comment.save();
           campground.comments.push(comment);
           campground.save();
+
+          req.flash('success', 'Successfully added comment');
           res.redirect(`/campgrounds/${req.params.id}`);
         }
       });
@@ -72,6 +75,7 @@ router.delete('/:comment_id', middleware.checkCommentOwnership, (req, res) => {
     if (err) {
       res.redirect('back');
     } else {
+      req.flash('success', 'Comment deleted');
       res.redirect(`/campgrounds/${req.params.id}`);
     }
   });
