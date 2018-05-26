@@ -4,10 +4,11 @@ const LocalStrategy = require('passport-local');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
+const moment = require('moment');
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
-const seedDB = require('./seeds');
-const User = require('./models/user');
+/* const seedDB = require('./seeds');
+ */const User = require('./models/user');
 
 const commentRoutes = require('./routes/comments');
 const campgroundRoutes = require('./routes/campgrounds');
@@ -16,9 +17,11 @@ const indexRoutes = require('./routes/index');
 const app = express();
 
 mongoose.connect('mongodb://localhost/yelp_camp');
-seedDB();
-
+/* seedDB();
+ */
 app.use(flash()); // Need Express Session & Must hapen before passport config
+
+app.locals.moment = moment;
 
 // PASSPORT CONFIG
 app.use(require('express-session')({

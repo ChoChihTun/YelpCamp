@@ -1,4 +1,4 @@
-.img-thumbnail img{
+.img-thumbnail img {
   width: 100%;
 }
 
@@ -20,4 +20,19 @@
 
 .delete-form {
   display: inline;
+}
+
+/* Prevents hamburger from collapsing instantly*/
+.navbar-collapse.collapse.in {
+  display: block !important;
+}
+
+.form-heading {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.form-layout {
+  width: 30%;
+  margin: 20px auto;
 }
