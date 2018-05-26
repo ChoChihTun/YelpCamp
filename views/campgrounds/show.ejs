@@ -32,7 +32,7 @@
             <!-- Checks if a user is logged in and matches the campground author -->
             <% if (currentUser && campground.author.id.equals(currentUser._id)) { %>
               <a href='/campgrounds/<%= campground._id %>/edit' class='btn btn-warning'>Edit</a>
-              <form id="delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE"
+              <form class="delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE"
                 method="POST">
                 <button class="btn btn-danger">Delete</button>
               </form>
@@ -55,6 +55,10 @@
                 <%= comment.text %>
               </p>
               <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">Edit</a>
+              <form class="delete-form" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE"
+                method="POST">
+                <button class="btn btn-danger">Delete</button>
+              </form>
             </div>
             <% }); %>
         </div>
