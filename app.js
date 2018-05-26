@@ -17,7 +17,13 @@ const indexRoutes = require('./routes/index');
 const app = express();
 
 /* mongoose.connect('mongodb://localhost/yelp_camp'); */
-mongoose.connect('mongodb://mongodb://ctchozzz:chozzz123@ds235860.mlab.com:35860/yelp_camp');
+mongoose.connect('mongodb://ctchozzz:chozzz@ds235860.mlab.com:35860/yelp_camp', {
+  auth: {
+    user: 'ctchozzz',
+    password: 'chozzz',
+  },
+});
+
 /* seedDB();
  */
 app.use(flash()); // Need Express Session & Must hapen before passport config
